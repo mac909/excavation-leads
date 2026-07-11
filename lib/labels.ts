@@ -41,8 +41,8 @@ export const STATUS_PIN_COLORS: Record<LeadStatus, string> = {
 };
 
 export const STATUS_COLORS: Record<LeadStatus, string> = {
-  NEW: "bg-blue-100 text-blue-800",
-  CONTACTED: "bg-amber-100 text-amber-800",
-  QUALIFIED: "bg-green-100 text-green-800",
-  REJECTED: "bg-gray-200 text-gray-600",
+  NEW: "bg-blue-50 text-blue-700 ring-blue-600/20",
+  CONTACTED: "bg-amber-50 text-amber-700 ring-amber-600/20",
+  QUALIFIED: "bg-emerald-50 text-emerald-700 ring-emerald-600/20",
+  REJECTED: "bg-slate-100 text-slate-500 ring-slate-500/20",
 };

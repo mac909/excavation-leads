@@ -13,7 +13,14 @@ npm run dev                        # http://localhost:3000
 - Load both once so maps/tiles are cached — needs internet for OSM tiles + geocoding
 - Close other tabs/notifications; zoom browser to ~110% if projecting
 
-## Demo script
+## Option A: Guided tour (easiest)
+
+Click the amber **Guided tour** button (bottom-right of the public page). It spotlights each
+feature and walks the full loop automatically: public form → pin-drop map → admin pipeline →
+lead detail → status updates. Sign in to `/admin` **before** starting so the admin leg flows without
+interruption. Narrate over the popovers; each step scrolls to the feature it describes.
+
+## Option B: Manual demo script
 
 **1. Frame it (30s)**
 "This is a digital property that turns excavation demand into qualified leads. Homeowners and contractors find it, describe their dig, and every submission lands in our pipeline with location, scope, timeline, and budget attached."
@@ -29,8 +36,8 @@ npm run dev                        # http://localhost:3000
 - Your lead is at the top, status **New**; counts by status across the top
 - Map shows all leads color-coded: blue New, amber Contacted, green Qualified, gray Rejected — "geographic density tells us where to focus crews or sell territories"
 - Filter by status/project type; sort by date
-- Open your lead → full detail + site map → change Triage status to **Contacted** → badge and pin update
-- "This is the lead-to-revenue loop: capture → triage → contact → qualified job"
+- Open your lead → full detail + site map → change Lead status to **Contacted** → badge and pin update
+- "This is the lead-to-revenue loop: capture → contact → quote → booked job"
 
 **4. Close (1 min)**
 - Built as a lean POC; deploys to a public URL in ~15 min

@@ -12,14 +12,24 @@ import {
 const LocationPicker = dynamic(() => import("./LocationPicker"), {
   ssr: false,
   loading: () => (
-    <div className="flex h-full w-full items-center justify-center bg-gray-100 text-sm text-gray-500">
+    <div className="flex h-full w-full items-center justify-center bg-slate-100 text-sm text-slate-400">
       Loading map…
     </div>
   ),
 });
 
 const inputClass =
-  "w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500";
+  "w-full rounded-none border-2 border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 transition focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500/40";
+
+const labelClass = "block text-sm font-medium text-slate-700";
+
+function SectionTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="font-display border-l-4 border-amber-500 pl-2 text-lg font-bold uppercase tracking-[0.15em] text-slate-900">
+      {children}
+    </p>
+  );
+}
 
 export default function LeadForm() {
   const [pin, setPin] = useState<LatLng | null>(null);
@@ -80,13 +90,26 @@ export default function LeadForm() {
 
   if (submitted) {
     return (
-      <div className="rounded-lg border border-green-200 bg-green-50 p-10 text-center">
-        <div className="mb-3 text-4xl">✅</div>
-        <h2 className="mb-2 text-xl font-semibold text-green-900">
+      <div className="py-10 text-center">
+        <span className="inline-flex h-14 w-14 items-center justify-center rounded-none border-2 border-emerald-600 bg-emerald-50">
+          <svg
+            className="h-7 w-7 text-emerald-600"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M20 6 9 17l-5-5" />
+          </svg>
+        </span>
+        <h2 className="font-display mt-4 text-3xl font-bold uppercase tracking-wide text-slate-900">
           Thanks — we received your project
         </h2>
-        <p className="mb-6 text-sm text-green-800">
-          A local excavation pro will review the details and reach out shortly.
+        <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-slate-500">
+          A local excavation pro will review the details and reach out shortly
+          with a quote.
         </p>
         <button
           onClick={() => {
@@ -95,7 +118,7 @@ export default function LeadForm() {
             setAddress("");
             setAddressEdited(false);
           }}
-          className="rounded-md bg-green-700 px-4 py-2 text-sm font-medium text-white hover:bg-green-800"
+          className="mt-8 rounded-none border-2 border-slate-900 bg-slate-900 px-5 py-2.5 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-slate-700"
         >
           Submit another project
         </button>
@@ -104,97 +127,118 @@ export default function LeadForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-8 lg:grid-cols-2">
-      <div className="space-y-4">
-        <div className="grid gap-4 sm:grid-cols-2">
-          <label className="block text-sm font-medium text-gray-700">
-            Name
-            <input name="name" required className={`mt-1 ${inputClass}`} placeholder="Jane Smith" />
-          </label>
-          <label className="block text-sm font-medium text-gray-700">
-            Phone
-            <input name="phone" type="tel" required className={`mt-1 ${inputClass}`} placeholder="512-555-0100" />
+    <form onSubmit={handleSubmit} className="grid gap-10 lg:grid-cols-2">
+      <div className="space-y-8">
+        <div id="tour-contact" className="space-y-4">
+          <SectionTitle>Contact</SectionTitle>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label className={labelClass}>
+              Name
+              <input name="name" required className={`mt-1.5 ${inputClass}`} placeholder="Jane Smith" />
+            </label>
+            <label className={labelClass}>
+              Phone
+              <input name="phone" type="tel" required className={`mt-1.5 ${inputClass}`} placeholder="512-555-0100" />
+            </label>
+          </div>
+          <label className={labelClass}>
+            Email
+            <input name="email" type="email" required className={`mt-1.5 ${inputClass}`} placeholder="jane@example.com" />
           </label>
         </div>
-        <label className="block text-sm font-medium text-gray-700">
-          Email
-          <input name="email" type="email" required className={`mt-1 ${inputClass}`} placeholder="jane@example.com" />
-        </label>
-        <label className="block text-sm font-medium text-gray-700">
-          Project type
-          <select name="projectType" required defaultValue="" className={`mt-1 ${inputClass}`}>
-            <option value="" disabled>Select a project type…</option>
-            {Object.entries(PROJECT_TYPE_LABELS).map(([value, label]) => (
-              <option key={value} value={value}>{label}</option>
-            ))}
-          </select>
-        </label>
-        <label className="block text-sm font-medium text-gray-700">
-          Project details
-          <textarea
-            name="description"
-            required
-            rows={4}
-            className={`mt-1 ${inputClass}`}
-            placeholder="Tell us about the site, access, soil, and what you need dug…"
-          />
-        </label>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <label className="block text-sm font-medium text-gray-700">
-            Timeline
-            <select name="timeline" required defaultValue="" className={`mt-1 ${inputClass}`}>
-              <option value="" disabled>When do you need it?</option>
-              {Object.entries(TIMELINE_LABELS).map(([value, label]) => (
+
+        <div id="tour-project" className="space-y-4">
+          <SectionTitle>Project</SectionTitle>
+          <label className={labelClass}>
+            Project type
+            <select name="projectType" required defaultValue="" className={`mt-1.5 ${inputClass}`}>
+              <option value="" disabled>Select a project type…</option>
+              {Object.entries(PROJECT_TYPE_LABELS).map(([value, label]) => (
                 <option key={value} value={value}>{label}</option>
               ))}
             </select>
           </label>
-          <label className="block text-sm font-medium text-gray-700">
-            Budget range
-            <select name="budgetRange" required defaultValue="" className={`mt-1 ${inputClass}`}>
-              <option value="" disabled>Estimated budget…</option>
-              {Object.entries(BUDGET_LABELS).map(([value, label]) => (
-                <option key={value} value={value}>{label}</option>
-              ))}
-            </select>
+          <label className={labelClass}>
+            Project details
+            <textarea
+              name="description"
+              required
+              rows={4}
+              className={`mt-1.5 ${inputClass}`}
+              placeholder="Tell us about the site, access, soil, and what you need dug…"
+            />
           </label>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label className={labelClass}>
+              Timeline
+              <select name="timeline" required defaultValue="" className={`mt-1.5 ${inputClass}`}>
+                <option value="" disabled>When do you need it?</option>
+                {Object.entries(TIMELINE_LABELS).map(([value, label]) => (
+                  <option key={value} value={value}>{label}</option>
+                ))}
+              </select>
+            </label>
+            <label className={labelClass}>
+              Budget range
+              <select name="budgetRange" required defaultValue="" className={`mt-1.5 ${inputClass}`}>
+                <option value="" disabled>Estimated budget…</option>
+                {Object.entries(BUDGET_LABELS).map(([value, label]) => (
+                  <option key={value} value={value}>{label}</option>
+                ))}
+              </select>
+            </label>
+          </div>
         </div>
       </div>
 
-      <div className="flex flex-col gap-3">
-        <div>
-          <span className="text-sm font-medium text-gray-700">Project location</span>
-          <p className="text-xs text-gray-500">
+      <div id="tour-location" className="flex flex-col gap-4">
+        <div className="space-y-4">
+          <SectionTitle>Location</SectionTitle>
+          <p className="-mt-2 text-sm text-slate-500">
             Click the map to drop a pin on the excavation site.
             {pin && (
-              <span className="ml-1 font-medium text-amber-700">
-                Pin: {pin.lat.toFixed(5)}, {pin.lng.toFixed(5)}
+              <span className="ml-1.5 inline-flex items-center gap-1 border border-amber-600 bg-amber-50 px-2 py-0.5 text-xs font-bold text-amber-700">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-3 w-3"
+                  aria-hidden
+                >
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                {pin.lat.toFixed(5)}, {pin.lng.toFixed(5)}
               </span>
             )}
           </p>
         </div>
-        <div className="h-72 overflow-hidden rounded-lg border border-gray-300 lg:h-80">
+        <div className="h-72 overflow-hidden border-2 border-slate-900 lg:h-80">
           <LocationPicker value={pin} onChange={handlePin} />
         </div>
-        <label className="block text-sm font-medium text-gray-700">
-          Address <span className="font-normal text-gray-400">(optional — auto-filled from pin)</span>
+        <label className={labelClass}>
+          Address <span className="font-normal text-slate-400">(optional — auto-filled from pin)</span>
           <input
             value={address}
             onChange={(e) => {
               setAddress(e.target.value);
               setAddressEdited(true);
             }}
-            className={`mt-1 ${inputClass}`}
+            className={`mt-1.5 ${inputClass}`}
             placeholder="Street address or parcel description"
           />
         </label>
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <p className="text-sm font-medium text-red-600">{error}</p>}
         <button
+          id="tour-submit"
           type="submit"
           disabled={!pin || submitting}
-          className="mt-auto rounded-md bg-amber-600 px-4 py-3 text-sm font-semibold text-white hover:bg-amber-700 disabled:cursor-not-allowed disabled:bg-gray-300"
+          className="mt-auto rounded-none border-2 border-slate-900 bg-amber-500 px-4 py-3.5 text-sm font-bold uppercase tracking-widest text-slate-900 shadow-[4px_4px_0_0_#0f172a] transition hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#0f172a] disabled:cursor-not-allowed disabled:border-slate-300 disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
         >
-          {submitting ? "Submitting…" : pin ? "Get My Free Quote" : "Drop a pin on the map to continue"}
+          {submitting ? "Submitting…" : pin ? "Get My Free Quote →" : "Drop a pin on the map to continue"}
         </button>
       </div>
     </form>

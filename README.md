@@ -1,7 +1,7 @@
 # DigSite Leads — Excavation Lead-Capture POC
 
 Proof-of-concept "digital real estate" demo: a public page where property owners/contractors
-submit excavation projects (with a map pin on the site), and an admin dashboard to triage the
+submit excavation projects (with a map pin on the site), and an admin dashboard to review and work the
 resulting leads.
 
 ## Stack
@@ -33,7 +33,7 @@ npm run dev          # http://localhost:3000
 - `/` — public lead form with click-to-drop-pin map (Nominatim reverse-geocodes the address)
 - `/api/leads` — POST endpoint, Zod-validated
 - `/admin` — password-gated dashboard: status/type filters, date sort, all-leads map
-- `/admin/leads/[id]` — lead detail + triage status updates
+- `/admin/leads/[id]` — lead detail + lead status updates
 
 ## Resetting the demo
 
