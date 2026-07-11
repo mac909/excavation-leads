@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DigSite Leads — Excavation Lead-Capture POC
 
-## Getting Started
+Proof-of-concept "digital real estate" demo: a public page where property owners/contractors
+submit excavation projects (with a map pin on the site), and an admin dashboard to triage the
+resulting leads.
 
-First, run the development server:
+## Stack
+
+Next.js 16 (App Router) · React 19 · Tailwind 4 · Prisma 6 · Postgres · Leaflet/OpenStreetMap · Zod
+
+## Local development
+
+Requires Node 20+ and a Postgres database. The demo DB runs in Docker:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+docker start excavation-leads-pg   # created with:
+# docker run -d --name excavation-leads-pg -e POSTGRES_PASSWORD=postgres \
+#   -e POSTGRES_DB=excavation_leads -p 54322:5432 postgres:16
+
+npm install
+npx prisma db push   # sync schema (no migrations for the POC)
+npm run reseed       # wipe + load 20 demo leads
+npm run dev          # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`.env` (see `.env.example`):
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `DATABASE_URL` — Postgres connection string
+- `ADMIN_PASSWORD` — shared password for `/admin` (demo default: `dig-demo-2026`)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Routes
 
-## Learn More
+- `/` — public lead form with click-to-drop-pin map (Nominatim reverse-geocodes the address)
+- `/api/leads` — POST endpoint, Zod-validated
+- `/admin` — password-gated dashboard: status/type filters, date sort, all-leads map
+- `/admin/leads/[id]` — lead detail + triage status updates
 
-To learn more about Next.js, take a look at the following resources:
+## Resetting the demo
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`npm run reseed` wipes all leads (including live submissions and status changes) and reloads
+the 20 seeded Austin-area leads. Run it before each stakeholder demo.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploying (Vercel + Neon)
 
-## Deploy on Vercel
+1. Create a free [Neon](https://neon.tech) Postgres project; copy the **pooled** connection
+   string (required on serverless, or connections exhaust under cold starts).
+2. Push this repo to GitHub and import it into [Vercel](https://vercel.com). The build works
+   as-is (`postinstall` runs `prisma generate`).
+3. Set env vars in Vercel: `DATABASE_URL` (pooled Neon string) and `ADMIN_PASSWORD`.
+4. Push the schema and seed the production DB once, from your machine:
+   ```bash
+   DATABASE_URL="<neon-pooled-url>" npx prisma db push
+   DATABASE_URL="<neon-pooled-url>" npm run reseed
+   ```
+5. Warm the URL once before presenting (Neon free tier cold-starts ~1s after idle).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## POC limitations (intentional)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+No user accounts, notifications, uploads, spam protection, rate limiting, migrations,
+tests, CI, or pagination beyond `take: 100`. Auth is a single shared password stored as a
+hashed cookie — demo-grade only.

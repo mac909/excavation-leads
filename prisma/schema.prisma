@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Lead {
+  id          String      @id @default(cuid())
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  name        String
+  email       String
+  phone       String
+  address     String?
+  lat         Float
+  lng         Float
+  projectType ProjectType
+  description String
+  timeline    Timeline
+  budgetRange BudgetRange
+  status      LeadStatus  @default(NEW)
+}
+
+enum ProjectType {
+  FOUNDATION_BASEMENT
+  POOL
+  UTILITY_TRENCHING
+  GRADING_CLEARING
+  DEMOLITION
+  SEPTIC
+  OTHER
+}
+
+enum Timeline {
+  ASAP
+  ONE_TO_THREE_MONTHS
+  THREE_TO_SIX_MONTHS
+  FLEXIBLE
+}
+
+enum BudgetRange {
+  UNDER_10K
+  FROM_10K_TO_25K
+  FROM_25K_TO_50K
+  FROM_50K_TO_100K
+  OVER_100K
+  UNSURE
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  REJECTED
+}
