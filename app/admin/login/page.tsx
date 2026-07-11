@@ -4,9 +4,9 @@ import LogoMark from "@/components/Logo";
 export default async function AdminLogin({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; tour?: string }>;
 }) {
-  const { error } = await searchParams;
+  const { error, tour } = await searchParams;
 
   return (
     <div className="blueprint relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-950 px-6">
@@ -29,6 +29,14 @@ export default async function AdminLogin({
           </p>
         </div>
         <form action={login} className="space-y-4">
+          {tour === "1" && (
+            <>
+              <input type="hidden" name="tour" value="1" />
+              <p className="border-l-4 border-amber-500 bg-amber-50 py-2 pl-3 pr-2 text-xs font-medium text-amber-800">
+                The guided tour continues after you sign in.
+              </p>
+            </>
+          )}
           <input
             name="password"
             type="password"

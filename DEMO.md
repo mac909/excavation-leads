@@ -15,10 +15,12 @@ npm run dev                        # http://localhost:3000
 
 ## Option A: Guided tour (easiest)
 
-Click the amber **Guided tour** button (bottom-right of the public page). It spotlights each
-feature and walks the full loop automatically: public form → pin-drop map → admin pipeline →
-lead detail → status updates. Sign in to `/admin` **before** starting so the admin leg flows without
-interruption. Narrate over the popovers; each step scrolls to the feature it describes.
+Click the amber **Guided tour** button (bottom-right of the public page), or share a link with
+`?tour=1` appended (e.g. `https://excavation-leads.vercel.app/?tour=1`) — the tour starts on load.
+It spotlights each feature and walks the full loop automatically: public form → pin-drop map →
+admin pipeline → lead detail → status updates. If the viewer isn't signed in, the admin hop shows
+the login screen and the tour resumes right after they enter the password. Narrate over the
+popovers; each step scrolls to the feature it describes.
 
 ## Option B: Manual demo script
 

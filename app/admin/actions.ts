@@ -8,9 +8,10 @@ import { prisma } from "@/lib/prisma";
 import { SESSION_COOKIE, sessionToken } from "@/lib/auth";
 
 export async function login(formData: FormData) {
+  const tour = formData.get("tour") === "1" ? "?tour=1" : "";
   const password = formData.get("password");
   if (typeof password !== "string" || password !== process.env.ADMIN_PASSWORD) {
-    redirect("/admin/login?error=1");
+    redirect(`/admin/login?error=1${tour ? "&tour=1" : ""}`);
   }
   const cookieStore = await cookies();
   cookieStore.set(SESSION_COOKIE, await sessionToken(), {
@@ -19,7 +20,7 @@ export async function login(formData: FormData) {
     path: "/",
     maxAge: 60 * 60 * 24 * 7,
   });
-  redirect("/admin");
+  redirect(`/admin${tour}`);
 }
 
 export async function logout() {

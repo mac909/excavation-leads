@@ -71,7 +71,7 @@ function start() {
       popover: {
         title: "Now, where do leads go?",
         description:
-          "Every submission lands in the admin pipeline, ready to work. Let's look. (You'll need the demo password if not signed in.)",
+          "Every submission lands in the admin pipeline, ready to work. Let's look. (If a sign-in screen appears, enter the demo password — the tour picks right back up.)",
         nextBtnText: "Tour the Admin →",
         onNextClick: () => {
           window.location.assign("/admin?tour=1");

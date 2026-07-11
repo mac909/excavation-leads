@@ -4,7 +4,7 @@ export default function TourButton({ onClick }: { onClick: () => void }) {
   return (
     <button
       onClick={onClick}
-      className="fixed bottom-5 right-5 z-[60] flex items-center gap-2 border-2 border-slate-900 bg-amber-500 px-4 py-2.5 text-xs font-bold uppercase tracking-widest text-slate-900 shadow-[4px_4px_0_0_#0f172a] transition hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#0f172a]"
+      className="fixed bottom-5 right-5 z-[1200] flex items-center gap-2 border-2 border-slate-900 bg-amber-500 px-4 py-2.5 text-xs font-bold uppercase tracking-widest text-slate-900 shadow-[4px_4px_0_0_#0f172a] transition hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_#0f172a]"
     >
       <svg
         viewBox="0 0 24 24"
