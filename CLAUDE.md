@@ -28,6 +28,7 @@ See vault notes with `type: contract`. Headline seams (internal, single repo):
 - Start substantive sessions with /onboard; it briefs from the vault.
 - No task is complete without /deliver (tests green + manual checklist filed).
 - /refresh reconciles the vault after other developers' changes — never regenerate the vault wholesale.
+- Verification checklists are filed only by /deliver into the vault — subagents never create their own.
 - Decision notes in the vault are never silently rewritten.
 - Do not commit, push, or open PRs in client repos without explicit instruction per action.
 
