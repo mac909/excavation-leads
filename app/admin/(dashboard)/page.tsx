@@ -52,6 +52,12 @@ export default async function AdminDashboard({
     return `/admin?${params.toString()}`;
   };
 
+  const exportParams = new URLSearchParams();
+  if (status) exportParams.set("status", status);
+  if (type) exportParams.set("type", type);
+  if (sort) exportParams.set("sort", sort);
+  const exportHref = `/admin/export${exportParams.size ? `?${exportParams}` : ""}`;
+
   const statCards: { label: string; count: number; href: string; active: boolean; dot?: string }[] = [
     { label: "All leads", count: total, href: "/admin", active: !status },
     ...Object.values(LeadStatus).map((s) => ({
@@ -72,6 +78,12 @@ export default async function AdminDashboard({
             Incoming excavation projects, newest first.
           </p>
         </div>
+        <a
+          href={exportHref}
+          className="rounded-none border-2 border-slate-900 bg-white px-4 py-2 text-sm font-bold uppercase tracking-widest text-slate-900 transition hover:bg-slate-900 hover:text-white"
+        >
+          Export CSV
+        </a>
       </div>
 
       {/* Stat cards (click to filter) */}
