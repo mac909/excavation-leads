@@ -38,6 +38,7 @@ popovers; each step scrolls to the feature it describes.
 - Your lead is at the top, status **New**; counts by status across the top
 - Map shows all leads color-coded: blue New, amber Contacted, green Qualified, gray Rejected — "geographic density tells us where to focus crews or sell territories"
 - Filter by status/project type; sort by date
+- Point out **Export CSV** (top-right) — downloads the currently filtered lead list as an Excel-ready CSV
 - Open your lead → full detail + site map → change Lead status to **Contacted** → badge and pin update
 - "This is the lead-to-revenue loop: capture → contact → quote → booked job"
 
@@ -51,6 +52,7 @@ popovers; each step scrolls to the feature it describes.
 - "What's real vs mock?" — App is fully real; the 20 existing leads are seeded. Anything submitted during the demo is stored for real
 - "Auth?" — Shared demo password; real user accounts are deliberately out of POC scope
 - "Cost to run?" — Free tiers cover a pilot; map has no API keys or usage fees (OpenStreetMap)
+- "Can I get the data out?" — Export CSV button, respects current filters
 
 ## Recovery
 

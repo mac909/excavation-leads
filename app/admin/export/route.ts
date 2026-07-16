@@ -11,8 +11,8 @@ export async function GET(request: Request) {
   const sort = searchParams.get("sort");
 
   const where: Prisma.LeadWhereInput = {};
-  if (status && status in LeadStatus) where.status = status as LeadStatus;
-  if (type && type in ProjectType) where.projectType = type as ProjectType;
+  if (status && Object.hasOwn(LeadStatus, status)) where.status = status as LeadStatus;
+  if (type && Object.hasOwn(ProjectType, type)) where.projectType = type as ProjectType;
   const order: Prisma.SortOrder = sort === "asc" ? "asc" : "desc";
 
   const leads = await prisma.lead.findMany({ where, orderBy: { createdAt: order } });
