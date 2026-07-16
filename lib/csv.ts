@@ -54,5 +54,5 @@ export function leadsToCsv(leads: LeadRow[]): string {
       csvField(l.lng),
     ].join(",")
   );
-  return "﻿" + [HEADERS.join(","), ...rows].map((r) => r + "\r\n").join("");
+  return "\uFEFF" + [HEADERS.join(","), ...rows].map((r) => r + "\r\n").join("");
 }

@@ -66,13 +66,13 @@ function makeLead(overrides: Partial<LeadRow> = {}): LeadRow {
 describe("leadsToCsv", () => {
   it("starts with exactly one BOM then the header row", () => {
     const csv = leadsToCsv([]);
-    expect(csv.startsWith("﻿")).toBe(true);
+    expect(csv.startsWith("\uFEFF")).toBe(true);
     expect(csv.slice(1).startsWith(HEADER)).toBe(true);
-    expect(csv.indexOf("﻿", 1)).toBe(-1);
+    expect(csv.indexOf("\uFEFF", 1)).toBe(-1);
   });
 
   it("emits header only (plus trailing CRLF) for an empty list", () => {
-    expect(leadsToCsv([])).toBe(`﻿${HEADER}\r\n`);
+    expect(leadsToCsv([])).toBe(`\uFEFF${HEADER}\r\n`);
   });
 
   it("uses CRLF between all rows", () => {
