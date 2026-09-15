@@ -57,5 +57,9 @@ the 20 seeded Austin-area leads. Run it before each stakeholder demo.
 ## POC limitations (intentional)
 
 No user accounts, notifications, uploads, spam protection, rate limiting, migrations,
-tests, CI, or pagination beyond `take: 100`. Auth is a single shared password stored as a
-hashed cookie — demo-grade only.
+CI, or pagination beyond `take: 100`. Auth is a single shared password stored as a
+hashed cookie — demo-grade only, and the password is published above on purpose so the
+dashboard can be clicked through.
+
+The only tests are `lib/csv.test.ts`, covering the CSV export's escaping and BOM —
+the one piece of logic here with enough edge cases to be worth pinning down.
